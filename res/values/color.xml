@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="transparent">#00000000</color>
+    <color name="white">#ffffffff</color>
+    <color name="yan_ash">#ff888888</color>
+    <color name="yan_blue">#ff00c8c9</color>
+    <color name="yan_black_1">#333333</color>
+    <color name="yan_black_2">#666666</color>
+    
+    <drawable name="yan_main_ash">#888888</drawable>
+    <drawable name="yan_main_blue">#00c8c9</drawable>
+    <drawable name="yan_main_white">#ffffff</drawable>
+    <drawable name="yan_main_ash_w">#e5e5e5</drawable>
+    <drawable name="yan_main_ash_bg">#eeeeee</drawable>
+    <drawable name="yan_reason_per">#2f000000</drawable>
+</resources>
+

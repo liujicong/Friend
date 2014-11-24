@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/aboveLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#dbdbdb"
+    android:orientation="vertical"
+    tools:context="cn.yanshang.friend.mainui.MainActivity" >
+
+    <LinearLayout
+        android:id="@+id/fragmentRoot"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation = "vertical" />
+<!-- "@drawable/main_footer_bar" @android:color/black -->
+    <LinearLayout
+        android:id="@+id/bottomList"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/main_footer_bar"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/bottomCurrentBg1"
+            style="@style/main_bottom_item" >
+
+            <RadioButton
+                android:id="@+id/rbMainLender"
+                style="@style/footbar"
+                android:drawableTop="@drawable/img_main_lender"
+                android:paddingTop="8dp"
+                android:textColor="@drawable/img_main_radio_color"
+                android:text="@string/main_table_1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bottomCurrentBg2"
+            style="@style/main_bottom_item" >
+            <RadioButton
+                android:id="@+id/rbMainFriend"
+                style="@style/footbar"
+                android:drawableTop="@drawable/img_main_friend"
+                android:paddingTop="8dp"
+                android:textColor="@drawable/img_main_radio_color"
+                android:text="@string/main_table_2" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bottomCurrentBg3"
+            style="@style/main_bottom_item" >
+            <RadioButton
+                android:id="@+id/rbMainMe"
+                style="@style/footbar"
+                android:drawableTop="@drawable/img_main_me"
+                android:paddingTop="8dp"
+                android:textColor="@drawable/img_main_radio_color"
+                android:text="@string/main_table_3" />
+        </LinearLayout>
+        
+    </LinearLayout>
+
+</RelativeLayout>
+
+
+
+
+

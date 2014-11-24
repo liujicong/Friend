@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/yan_main_ash_bg"
+    android:orientation="vertical" >
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="63.0dp"
+        layout="@layout/custom_title_layout" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffeeeeee"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tvBorrowReason"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/yan_main_white"
+                android:gravity="center"
+                android:maxLength="140"
+                android:paddingBottom="20dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="20dp"
+                android:textColor="@color/yan_black_2"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@drawable/yan_main_ash_w" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/yan_main_white"
+                android:paddingLeft="10dp" >
+
+                <TableRow android:layout_marginTop="10dp" >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/yan_main_white"
+                            android:text="@string/borrow_submit_1"
+                            android:textColor="@color/yan_black_2"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/textMoney"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/yan_main_white"
+                            android:layout_marginRight="10dp"
+                            android:textColor="@color/yan_black_2"
+                            android:text="op"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/yan_main_white"
+                            android:text="@string/borrow_submit_2"
+                            android:textColor="@color/yan_black_2"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/textRepaymentDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/yan_main_white"
+                            android:layout_marginRight="10dp"
+                            android:textColor="@color/yan_black_2"
+                            android:text="poi"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+                </TableRow>
+
+                <TableRow
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp" >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/yan_main_white"
+                            android:text="@string/borrow_submit_3"
+                            android:textColor="@color/yan_black_2"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/textYearInterest"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/yan_main_white"
+                            android:layout_marginRight="10dp"
+                            android:textColor="@color/yan_black_2"
+                            android:text="yut"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/yan_main_white"
+                            android:text="@string/borrow_submit_4"
+                            android:textColor="@color/yan_black_2"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/textDeadline"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/yan_main_white"
+                            android:textColor="@color/yan_black_2"
+                            android:text="poi"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnSubmitOk"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/img_login_btn_a"
+            android:text="@string/borrow_submit_btn1"
+            android:textColor="#ffffffff"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/btnBackModify"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/img_modify_btn"
+            android:text="@string/borrow_submit_btn2"
+            android:textColor="@color/yan_black_1"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+</LinearLayout>
+
