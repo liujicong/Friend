@@ -5,6 +5,6 @@ package cn.yanshang.friend;
 public interface SignupListener {
 
 	public boolean isSignup();
-	
-	//public boolean doSignup(Platform platform);
+
+	// public boolean doSignup(Platform platform);
 }

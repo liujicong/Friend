@@ -40,19 +40,18 @@ public class BorrowReason extends Activity implements
 
 	private Activity mActivity;
 	private Data mAppData;
-	//private ItemClickEvent itemListener;
+	// private ItemClickEvent itemListener;
 
 	BorrowReasonSelectPopup menuWindow;
 	private EditText imageViewEdit;
 	private View borrowImgBg;
 
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.borrow_reason_ui);
 
-		mAppData = (Data)getApplication(); 
+		mAppData = (Data) getApplication();
 		mActivity = this;
 		initBase();
 	}
@@ -72,19 +71,20 @@ public class BorrowReason extends Activity implements
 
 		imageViewEdit = (EditText) findViewById(R.id.tvBorrowReason);
 		imageViewEdit.setOnClickListener(this);
-		
+
 		findViewById(R.id.btnNextStep3).setOnClickListener(this);
-		
-		borrowImgBg = (View)findViewById(R.id.tvBorrowImgBg);
-				
-		if (mAppData.getBorrowReasonStr()!=null) {
+
+		borrowImgBg = (View) findViewById(R.id.tvBorrowImgBg);
+
+		if (mAppData.getBorrowReasonStr() != null) {
 			imageViewEdit.setText(mAppData.getBorrowReasonStr());
 		}
-		if (mAppData.getBorrowReasonImg()!=null) {
-			//imageViewEdit.set//setText(mAppData.getBorrowReasonStr());
-			Drawable drawable = new BitmapDrawable(this.getResources(), mAppData.getBorrowReasonImg());
+		if (mAppData.getBorrowReasonImg() != null) {
+			// imageViewEdit.set//setText(mAppData.getBorrowReasonStr());
+			Drawable drawable = new BitmapDrawable(this.getResources(),
+					mAppData.getBorrowReasonImg());
 			borrowImgBg.setBackgroundDrawable(drawable);
-			//imageViewEdit.setBackgroundDrawable(drawable);
+			// imageViewEdit.setBackgroundDrawable(drawable);
 		}
 	}
 
@@ -105,7 +105,8 @@ public class BorrowReason extends Activity implements
 				// 判断存储卡是否可以用，可用进行存储
 				String state = Environment.getExternalStorageState();
 				if (state.equals(Environment.MEDIA_MOUNTED)) {
-					File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+					File path = Environment
+							.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
 					File tempFile = new File(path, IMAGE_FILE_NAME);
 					startPhotoZoom(Uri.fromFile(tempFile));
 				} else {
@@ -133,12 +134,13 @@ public class BorrowReason extends Activity implements
 			break;
 		case R.id.btnNextStep3: {
 			mAppData.setBorrowReasonStr(imageViewEdit.getText().toString());
-			//mAppData.setBorrowReasonImg(imgUrl)
-			
-			if (mAppData.getIdentity()!=null&&mAppData.getIdentity().length()>0) {
-				//判断
-				//跳转到输入身份信息界面
-			}else {
+			// mAppData.setBorrowReasonImg(imgUrl)
+
+			if (mAppData.getIdentity() != null
+					&& mAppData.getIdentity().length() > 0) {
+				// 判断
+				// 跳转到输入身份信息界面
+			} else {
 				Intent it = new Intent();
 				it.setClass(this, BorrowSubmitUI.class);
 				startActivity(it);
@@ -168,7 +170,8 @@ public class BorrowReason extends Activity implements
 					Intent intentFromGallery = new Intent();
 					intentFromGallery.setType("image/*");
 					intentFromGallery.setAction(Intent.ACTION_GET_CONTENT);
-					startActivityForResult(intentFromGallery,IMAGE_REQUEST_CODE);
+					startActivityForResult(intentFromGallery,
+							IMAGE_REQUEST_CODE);
 				}
 					break;
 				default:
@@ -182,14 +185,15 @@ public class BorrowReason extends Activity implements
 				Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
 	}
 
-
 	private void takePhoto() {
 		Intent intentFromCapture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		String state = Environment.getExternalStorageState();
 		if (state.equals(Environment.MEDIA_MOUNTED)) {
-			File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+			File path = Environment
+					.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
 			File file = new File(path, IMAGE_FILE_NAME);
-			intentFromCapture.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(file));
+			intentFromCapture.putExtra(MediaStore.EXTRA_OUTPUT,
+					Uri.fromFile(file));
 		}
 		startActivityForResult(intentFromCapture, CAMERA_REQUEST_CODE);
 	}
@@ -197,12 +201,12 @@ public class BorrowReason extends Activity implements
 	public void startPhotoZoom(Uri uri) {
 		Intent intent = new Intent("com.android.camera.action.CROP");
 		intent.setDataAndType(uri, "image/*");
-		
+
 		intent.putExtra("crop", "true");
-		
+
 		intent.putExtra("aspectX", 1);
 		intent.putExtra("aspectY", 1);
-		
+
 		intent.putExtra("outputX", 340);
 		intent.putExtra("outputY", 340);
 		intent.putExtra("return-data", true);
@@ -211,23 +215,16 @@ public class BorrowReason extends Activity implements
 
 	private void getImageToView(Intent data) {
 		Bundle extras = data.getExtras();
-//		Toast.makeText(getApplicationContext(), "getImageToView",
-//				Toast.LENGTH_SHORT).show();
+		// Toast.makeText(getApplicationContext(), "getImageToView",
+		// Toast.LENGTH_SHORT).show();
 		if (extras != null) {
 			Bitmap photo = extras.getParcelable("data");
 			Drawable drawable = new BitmapDrawable(this.getResources(), photo);
-			//imageViewEdit.setBackgroundDrawable(drawable);
+			// imageViewEdit.setBackgroundDrawable(drawable);
 			borrowImgBg.setBackgroundDrawable(drawable);
-			
+
 			mAppData.setBorrowReasonImg(photo);
 		}
 	}
 
-	
 }
-
-
-
-
-
-

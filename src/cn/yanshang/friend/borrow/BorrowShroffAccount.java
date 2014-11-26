@@ -18,23 +18,22 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-
-public class BorrowShroffAccount extends Activity implements OnClickListener{
+public class BorrowShroffAccount extends Activity implements OnClickListener {
 
 	private EditText mInputAlipayAccount;
 	private EditText mInputBankAccountName;
 	private EditText mInputBankName;
 	private EditText mInputBankCardNum;
-	
+
 	private Data mAppData;
-	
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.borrow_shroff_account);
-		
-		mAppData = (Data)getApplication();
+
+		mAppData = (Data) getApplication();
 		initBase();
-		
+
 		checkHistory();
 	}
 
@@ -47,9 +46,9 @@ public class BorrowShroffAccount extends Activity implements OnClickListener{
 
 		TextView contentText = (TextView) findViewById(R.id.customTitleContent);
 		contentText.setText(R.string.borrow_shroff_title);
-		
+
 		findViewById(R.id.btnNextStep2).setOnClickListener(this);
-		
+
 		mInputAlipayAccount = (EditText) findViewById(R.id.inputAlipayAccount);
 		mInputBankAccountName = (EditText) findViewById(R.id.inputBankAccountName);
 		mInputBankName = (EditText) findViewById(R.id.inputBankName);
@@ -59,30 +58,30 @@ public class BorrowShroffAccount extends Activity implements OnClickListener{
 	private void nextUnanimous() {
 
 		int count = 0;
-		if (mInputBankAccountName.getText().toString().length()>0) {
+		if (mInputBankAccountName.getText().toString().length() > 0) {
 			count++;
 		}
-		if (mInputBankName.getText().toString().length()>0) {
+		if (mInputBankName.getText().toString().length() > 0) {
 			count++;
 		}
-		if (mInputBankCardNum.getText().toString().length()>0) {
+		if (mInputBankCardNum.getText().toString().length() > 0) {
 			count++;
 		}
-		
-		if (count!=3&&count!=0) {
+
+		if (count != 3 && count != 0) {
 			ProgressUtil.showDialog(this,
 					getResources().getString(R.string.dialog_title_1),
 					getResources().getString(R.string.dialog_borrow_shroff));
-		}else {
+		} else {
 			dataBackup();
-			
-			Intent it=new Intent();
+
+			Intent it = new Intent();
 			it.setClass(this, BorrowReason.class);
 			startActivity(it);
 		}
-		
+
 	}
-	
+
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
@@ -100,26 +99,19 @@ public class BorrowShroffAccount extends Activity implements OnClickListener{
 			break;
 		}
 	}
-	
+
 	private void dataBackup() {
 		mAppData.setAlipayAccount(mInputAlipayAccount.getText().toString());
 		mAppData.setBankAccountName(mInputBankAccountName.getText().toString());
 		mAppData.setBankName(mInputBankName.getText().toString());
 		mAppData.setBankCardNum(mInputBankCardNum.getText().toString());
 	}
-	
+
 	private void checkHistory() {
 		mInputAlipayAccount.setText(mAppData.getAlipayAccount());
 		mInputBankAccountName.setText(mAppData.getBankAccountName());
 		mInputBankName.setText(mAppData.getBankName());
 		mInputBankCardNum.setText(mAppData.getBankCardNum());
 	}
-	
-	
+
 }
-
-
-
-
-
-

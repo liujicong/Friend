@@ -5,8 +5,6 @@ import org.apache.http.HttpResponse;
 public final class ResponseStatus {
 
 	HttpResponse mHttpResponse;
-	
+
 	Integer mStatus;
 }
-
-

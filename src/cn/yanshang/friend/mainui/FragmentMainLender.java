@@ -9,13 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class FragmentMainLender  extends Fragment{
+public class FragmentMainLender extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater,
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		return inflater.inflate(R.layout.fragment_main_lender, container, false);
+		return inflater
+				.inflate(R.layout.fragment_main_lender, container, false);
 	}
 
 	@Override

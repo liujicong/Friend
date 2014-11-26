@@ -22,9 +22,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 
-
 public abstract class Base64AES {
-	
 
 	/**
 	 * @param content
@@ -42,7 +40,7 @@ public abstract class Base64AES {
 			byte[] byteContent = content.getBytes("utf-8");
 			cipher.init(Cipher.ENCRYPT_MODE, key);
 			byte[] result = cipher.doFinal(byteContent);
-			return result; 
+			return result;
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		} catch (NoSuchPaddingException e) {
@@ -57,8 +55,8 @@ public abstract class Base64AES {
 			e.printStackTrace();
 		}
 		return null;
-	}  
-	
+	}
+
 	/**
 	 * @param content
 	 * @param password
@@ -89,28 +87,30 @@ public abstract class Base64AES {
 		return null;
 	}
 
-	/** 
+	/**
 	 * BASE64
-     * @param bytes 
-     * @return 
-     */  
-    public static byte[] decodeBase64(byte[] bytes) {  
-        return Base64.decode(bytes, Base64.DEFAULT); 
-        //.decodeBase64(bytes);  
-    }  
-  
-    /** 
-     * @param bytes 
-     * @return 
-     * @throws Exception 
-     */  
-    public static byte[] encodeBase64(byte[] bytes) {  
-        return Base64.encode(bytes,Base64.DEFAULT);
-        //String(Base64.encodeToString(input, flags));//Base64.encodeBase64(bytes)  
-    }  
-    
-	/** 
-	 * InputStream 
+	 * 
+	 * @param bytes
+	 * @return
+	 */
+	public static byte[] decodeBase64(byte[] bytes) {
+		return Base64.decode(bytes, Base64.DEFAULT);
+		// .decodeBase64(bytes);
+	}
+
+	/**
+	 * @param bytes
+	 * @return
+	 * @throws Exception
+	 */
+	public static byte[] encodeBase64(byte[] bytes) {
+		return Base64.encode(bytes, Base64.DEFAULT);
+		// String(Base64.encodeToString(input,
+		// flags));//Base64.encodeBase64(bytes)
+	}
+
+	/**
+	 * InputStream
 	 * **/
 	public static final InputStream byte2InputStream(byte[] buf) {
 		return new ByteArrayInputStream(buf);
@@ -127,8 +127,7 @@ public abstract class Base64AES {
 		byte[] in2b = swapStream.toByteArray();
 		return in2b;
 	}
-    
-	
+
 	/**
 	 * 
 	 * @param buf
@@ -163,10 +162,10 @@ public abstract class Base64AES {
 		}
 		return result;
 	}
-	
-	
+
 	/**
 	 * bitmap转为base64
+	 * 
 	 * @param bitmap
 	 * @return
 	 */
@@ -202,6 +201,7 @@ public abstract class Base64AES {
 
 	/**
 	 * base64转为bitmap
+	 * 
 	 * @param base64Data
 	 * @return
 	 */
@@ -209,10 +209,5 @@ public abstract class Base64AES {
 		byte[] bytes = Base64.decode(base64Data, Base64.DEFAULT);
 		return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
 	}
-	
+
 }
-
-
-
-
-

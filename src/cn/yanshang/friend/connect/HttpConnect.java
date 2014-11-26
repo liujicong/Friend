@@ -9,56 +9,54 @@ import cn.yanshang.friend.net.ConnectHttpTask;
 public class HttpConnect {
 
 	private ConnectHttpTask sHttpTask;
-	
-    public static HttpConnect newInstance(){
-        return new HttpConnect();
-     }
-    
-    
-    public void doPost(Context context, String jsonstring, final BaseInfo objInfo, String url,
-            final BaseListener listener) {
-    	
-    	//String url = Constants.APP_SERVER_URL_POST_BIND_PHONE;
-    	
-    	if(sHttpTask!=null){
-    		sHttpTask.cancel(true);
-    	}
-    	
-    	sHttpTask = new ConnectHttpTask(context);
-   	
-    	sHttpTask.doPost(new ConnectHttpListener(){
+
+	public static HttpConnect newInstance() {
+		return new HttpConnect();
+	}
+
+	public void doPost(Context context, String jsonstring,
+			final BaseInfo objInfo, String url, final BaseListener listener) {
+
+		// String url = Constants.APP_SERVER_URL_POST_BIND_PHONE;
+
+		if (sHttpTask != null) {
+			sHttpTask.cancel(true);
+		}
+
+		sHttpTask = new ConnectHttpTask(context);
+
+		sHttpTask.doPost(new ConnectHttpListener() {
 
 			@Override
 			public void onResponse(String response) {
 				// TODO Auto-generated method stub
-				if(response==null)
-				{
+				if (response == null) {
 					Log.d("Test", "sHttpTask.doGet onResponse= null!");
-					return ;
+					return;
 				}
-				
-                //TestUserInfo userInfo = objInfo.parseJson(response);
-				if(objInfo.parseJson(response)){
+
+				// TestUserInfo userInfo = objInfo.parseJson(response);
+				if (objInfo.parseJson(response)) {
 					listener.onGotInfo(objInfo);
-				}else {
+				} else {
 					listener.onGotInfo(objInfo);
 				}
-  
-                sHttpTask = null;
+
+				sHttpTask = null;
 			}
 
-			@Override 
+			@Override
 			public void onCancelled() {
 				// TODO Auto-generated method stub
-                listener.onGotInfo(null);
-                sHttpTask = null;
+				listener.onGotInfo(null);
+				sHttpTask = null;
 			}
-    		
-    	}, jsonstring, url);
-    }
-    
-    public boolean doCancel() {
-            return (sHttpTask != null) ? sHttpTask.cancel(true) : false;
-   	}
-    
+
+		}, jsonstring, url);
+	}
+
+	public boolean doCancel() {
+		return (sHttpTask != null) ? sHttpTask.cancel(true) : false;
+	}
+
 }

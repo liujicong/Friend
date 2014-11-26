@@ -11,7 +11,7 @@ import org.json.JSONObject;
 //import cn.smssdk.EventHandler;
 //import cn.smssdk.SMSSDK;
 import cn.yanshang.friend.R.string;
-import cn.yanshang.friend.common.Constants;
+import cn.yanshang.friend.common.MyConstants;
 import cn.yanshang.friend.common.Shared;
 import cn.yanshang.friend.connect.BaseInfo;
 import cn.yanshang.friend.connect.BaseListener;
@@ -232,7 +232,7 @@ public class LoginPhoneRegister extends Activity implements OnClickListener,
 			connectServerIsValid();
 			// RequestVerificationCode();
 			break;
-		case R.id.btnRegister:{
+		case R.id.btnRegister: {
 			goRegister();
 		}
 			break;
@@ -254,8 +254,9 @@ public class LoginPhoneRegister extends Activity implements OnClickListener,
 		String password = inputPassword.getText().toString();
 		String verifyCode = inputCheck.getText().toString();
 
-		//密码判断
-		if (password.length() < 8 || password.length()>20 || !CommonUtils.isPasswordValid(password)) {
+		// 密码判断
+		if (password.length() < 8 || password.length() > 20
+				|| !CommonUtils.isPasswordValid(password)) {
 			ProgressUtil.showDialog(this,
 					getResources().getString(R.string.dialog_title_1),
 					getResources().getString(R.string.dialog_password_1));
@@ -323,22 +324,23 @@ public class LoginPhoneRegister extends Activity implements OnClickListener,
 		// 获取验证码
 		HttpConnect.newInstance().doPost(this,
 				bInfo.getJsonString(keyValueMap, "register-with-phone"), bInfo,
-				Constants.URL_POST_SEND_PHONE_CODE, this);
+				MyConstants.URL_POST_SEND_PHONE_CODE, this);
 	}
 
-	private void connectServerRegister(String phoneNum, String password,String verifyCode) {
-		
+	private void connectServerRegister(String phoneNum, String password,
+			String verifyCode) {
+
 		Map<String, String> keyValueMap = new HashMap<String, String>();
 		keyValueMap.put("phone", phoneNum);
 		keyValueMap.put("password", password);
 		keyValueMap.put("code", verifyCode);
 
 		RegisterUserInfo bInfo = new RegisterUserInfo();
-		
-		//登录
+
+		// 登录
 		HttpConnect.newInstance().doPost(this,
 				bInfo.getJsonString(keyValueMap, null), bInfo,
-				Constants.URL_POST_USER_REGISTER, this);
+				MyConstants.URL_POST_USER_REGISTER, this);
 	}
 
 	@Override
@@ -358,58 +360,35 @@ public class LoginPhoneRegister extends Activity implements OnClickListener,
 			Toast.makeText(this, "onGotInfoErr=" + "bInfo==null",
 					Toast.LENGTH_SHORT).show();
 			return;
-		} else if (bInfo.getStatus() == Constants.HTTP_STATUS_TIMEOUT) {
-			ProgressUtil.dismiss(mProgress);
-			Toast.makeText(this, "onGotInfoErr=网络链接超时", Toast.LENGTH_SHORT)
-					.show();
-			return;
-		}//网络异常
- 
-		if (bInfo.getStatus() != Constants.HTTP_STATUS_OK) {
-			if (bInfo.getStatus() == Constants.HTTP_STATUS_VALID_FALSE) {
-				Toast.makeText(this, "此号码已经注册过", Toast.LENGTH_SHORT).show();
-			} else if (bInfo.getStatus() == Constants.HTTP_STATUS_VALID_TURE) {
-				btnRegister.setEnabled(true);
+		} else if (bInfo.getStatus() == MyConstants.HTTP_STATUS_VALID_TURE) {
+			btnRegister.setEnabled(true);
+			mPhoneNum = bInfo.getPhoneNum();
 
-				mPhoneNum = bInfo.getPhoneNum();
-				
-				//测试用
-				inputCheck.setText(bInfo.getCode());
-			} else {
-				Toast.makeText(this, "onGotInfoErr=" + bInfo.getStatus(),
-						Toast.LENGTH_SHORT).show();
-			}
-
-			ProgressUtil.dismiss(mProgress);
-			return;
-		}
-
-		
-
-		if (bInfo.getStatus() == Constants.HTTP_STATUS_OK) {
-			//保存登录信息
+			// 测试用
+			inputCheck.setText(bInfo.getCode());
+		}else if (bInfo.getStatus() == MyConstants.HTTP_STATUS_OK) {
+			// 保存登录信息
 			saveLoginInfo(bInfo);
-			
+
 			Intent it = new Intent();
 			it.setClass(this, cn.yanshang.friend.mainui.MainActivity.class);
 			startActivity(it);
 
-			Toast.makeText(this, "onGotInfo=" + bInfo.getPhoneNum(),
+			Toast.makeText(this, "onGotInfo=" + bInfo.getStatus(),
 					Toast.LENGTH_SHORT).show();
 			//this.finish();
-		} else {
-			Toast.makeText(this, "onGotInfoErr=" + bInfo.getStatus(),
-					Toast.LENGTH_SHORT).show();
+		}else {
+			CommonUtils.statusError(bInfo.getStatus(), this);
 		}
 		
 		ProgressUtil.dismiss(mProgress);
 	}
-	
-	private void saveLoginInfo(RegisterUserInfo bInfo){
-		
+
+	private void saveLoginInfo(RegisterUserInfo bInfo) {
+
 		SharedPreferences preferences = getSharedPreferences(
 				Shared.SHARE_LOGIN_ALL_GET, Context.MODE_PRIVATE);
-		
+
 		Editor editor = preferences.edit();
 		editor.putInt(Shared.SHARE_LOGIN_UID, bInfo.getUid());
 		editor.putString(Shared.SHARE_LOGIN_SID, bInfo.getSid());
@@ -419,10 +398,8 @@ public class LoginPhoneRegister extends Activity implements OnClickListener,
 		editor.putString(Shared.SHARE_LOGIN_IDCARD, bInfo.getIdCard());
 		editor.putString(Shared.SHARE_LOGIN_HEADIMGURL, bInfo.getHeadimgurl());
 		editor.putString(Shared.SHARE_LOGIN_SIGNATURE, bInfo.getSignature());
-		
+
 		editor.commit();
 	}
-	
+
 }
-
-

@@ -24,42 +24,46 @@ public class ProgressUtil {
 			String message) {
 		AlertDialog.Builder builder = new Builder(context);
 		builder.setMessage(message);
-	
+
 		builder.setTitle(title);
-		builder.setPositiveButton(context.getString(R.string.dialog_btn_ok), new OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
-			}
-		});
-		
-//		builder.setNegativeButton("取消", new OnClickListener() {
-//			@Override
-//			public void onClick(DialogInterface dialog, int which) {
-//				dialog.dismiss();
-//			}
-//		});	
+		builder.setPositiveButton(context.getString(R.string.dialog_btn_ok),
+				new OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				});
+
+		// builder.setNegativeButton("取消", new OnClickListener() {
+		// @Override
+		// public void onClick(DialogInterface dialog, int which) {
+		// dialog.dismiss();
+		// }
+		// });
 		builder.create().show();
 
 		return builder;
 	}
-	
+
 	public static AlertDialog.Builder showDialog(Context context, String title,
 			String message, OnClickListener okListener) {
-		
+
 		AlertDialog.Builder builder = new Builder(context);
 		builder.setMessage(message);
-		
+
 		builder.setTitle(title);
-		builder.setPositiveButton(context.getString(R.string.dialog_btn_ok), okListener);
-		
-		builder.setNegativeButton(context.getString(R.string.login_register_cancel), new OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
-			}
-		});
-				
+		builder.setPositiveButton(context.getString(R.string.dialog_btn_ok),
+				okListener);
+
+		builder.setNegativeButton(
+				context.getString(R.string.login_register_cancel),
+				new OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				});
+
 		builder.create().show();
 
 		return builder;

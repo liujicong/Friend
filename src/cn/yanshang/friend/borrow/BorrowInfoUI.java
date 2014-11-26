@@ -7,7 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import cn.yanshang.friend.R;
-import cn.yanshang.friend.common.Constants;
+import cn.yanshang.friend.common.MyConstants;
 import cn.yanshang.friend.common.Data;
 import cn.yanshang.friend.common.Shared;
 import cn.yanshang.friend.utils.CommonUtils;
@@ -50,14 +50,14 @@ public class BorrowInfoUI extends Activity implements OnClickListener,
 
 	private String mStrDay;
 	private Data mAppData;
-		
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.borrow_info_ui);
 
-		mAppData = (Data)getApplication(); 
+		mAppData = (Data) getApplication();
 		mActivity = this;
 		initBase();
 
@@ -66,7 +66,7 @@ public class BorrowInfoUI extends Activity implements OnClickListener,
 
 	private void showpickerD() {
 
-		//DatePickerDialog datePickerDialog3 = new DatePickerDialog();
+		// DatePickerDialog datePickerDialog3 = new DatePickerDialog();
 		DatePickerDialog datePickerDialog = new DatePickerDialog(this,
 				new DatePickerDialog.OnDateSetListener() {
 
@@ -74,7 +74,7 @@ public class BorrowInfoUI extends Activity implements OnClickListener,
 					public void onDateSet(DatePicker view, int year,
 							int monthOfYear, int dayOfMonth) {
 						// TODO Auto-generated method stub
-						
+
 						Calendar calendar = Calendar.getInstance();
 						calendar.set(year, monthOfYear, dayOfMonth);
 						SimpleDateFormat format = new SimpleDateFormat(
@@ -85,11 +85,11 @@ public class BorrowInfoUI extends Activity implements OnClickListener,
 					}
 				}, 2015, 12, 15);
 
-		DatePicker datePicker = datePickerDialog.getDatePicker();  
-		
-        datePicker.setMinDate(System.currentTimeMillis());
-        datePicker.setMaxDate(CommonUtils.getMillisThreeYear());
-        
+		DatePicker datePicker = datePickerDialog.getDatePicker();
+
+		datePicker.setMinDate(System.currentTimeMillis());
+		datePicker.setMaxDate(CommonUtils.getMillisThreeYear());
+
 		datePickerDialog.show();
 	}
 
@@ -114,7 +114,7 @@ public class BorrowInfoUI extends Activity implements OnClickListener,
 				if (!hasFocus && getStr.length() > 0) {
 					mBtNextStep.setEnabled(true);
 					float fl = Float.parseFloat(getStr);
-					if (fl > Constants.BORROW_MAX_VALUE) {
+					if (fl > MyConstants.BORROW_MAX_VALUE) {
 						Toast.makeText(mActivity, "借款金额最大为10万",
 								Toast.LENGTH_SHORT).show();
 					} else {
@@ -275,7 +275,7 @@ public class BorrowInfoUI extends Activity implements OnClickListener,
 			// Toast.makeText(this, "00", Toast.LENGTH_SHORT).show();
 			break;
 		}
-		
+
 	}
 
 	private void submitRecord() throws ParseException {
@@ -300,20 +300,20 @@ public class BorrowInfoUI extends Activity implements OnClickListener,
 			}
 		}
 
-//		if (Item2.length() > 2) {
-//			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-//			Date curDate = new Date(System.currentTimeMillis());
-//			String start = formatter.format(curDate);
-//			long days = CommonUtils.getDayOfBorrow(start, Item2);
-//			if (days < 1 || days > 1095) {
-//				ProgressUtil.showDialog(
-//						this,
-//						getResources().getString(R.string.dialog_title_1),
-//						getResources().getString(
-//								R.string.dialog_borrow_info_2_1));
-//				return;
-//			}
-//		}
+		// if (Item2.length() > 2) {
+		// SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		// Date curDate = new Date(System.currentTimeMillis());
+		// String start = formatter.format(curDate);
+		// long days = CommonUtils.getDayOfBorrow(start, Item2);
+		// if (days < 1 || days > 1095) {
+		// ProgressUtil.showDialog(
+		// this,
+		// getResources().getString(R.string.dialog_title_1),
+		// getResources().getString(
+		// R.string.dialog_borrow_info_2_1));
+		// return;
+		// }
+		// }
 
 		if (Item3.length() > 1) {
 			String itTextSt = Item3;
@@ -352,7 +352,7 @@ public class BorrowInfoUI extends Activity implements OnClickListener,
 					getResources().getString(R.string.dialog_title_1),
 					getResources().getString(R.string.dialog_borrow_info_4));
 		} else {
-			
+
 			if (Item3.contains("%")) {
 				Item3 = Item3.substring(0, Item3.indexOf("%"));
 			}
@@ -360,28 +360,30 @@ public class BorrowInfoUI extends Activity implements OnClickListener,
 				Item4 = Item4.substring(0, Item4.indexOf(mStrDay));
 			}
 
-			if(CommonUtils.isDeadlineError(Item2, Integer.valueOf(Item4))){
-				ProgressUtil.showDialog(this,
+			if (CommonUtils.isDeadlineError(Item2, Integer.valueOf(Item4))) {
+				ProgressUtil.showDialog(
+						this,
 						getResources().getString(R.string.dialog_title_1),
-						getResources().getString(R.string.dialog_borrow_info_4_2));
+						getResources().getString(
+								R.string.dialog_borrow_info_4_2));
 				return;
 			}
-			
-//			SharedPreferences preferences = getSharedPreferences(
-//					Shared.SHARE_BORROW_INFO, Context.MODE_PRIVATE);
-//			Editor editor = preferences.edit();
-//			editor.putString(Shared.SHARE_BORROW_INFO_MONEY, Item1);
-//			editor.putString(Shared.SHARE_BORROW_INFO_DATE, Item2);
-//			editor.putString(Shared.SHARE_BORROW_INFO_INTEREST, Item3);
-//			editor.putString(Shared.SHARE_BORROW_INFO_DEADLINE, Item4);
-//			editor.commit();
-			
+
+			// SharedPreferences preferences = getSharedPreferences(
+			// Shared.SHARE_BORROW_INFO, Context.MODE_PRIVATE);
+			// Editor editor = preferences.edit();
+			// editor.putString(Shared.SHARE_BORROW_INFO_MONEY, Item1);
+			// editor.putString(Shared.SHARE_BORROW_INFO_DATE, Item2);
+			// editor.putString(Shared.SHARE_BORROW_INFO_INTEREST, Item3);
+			// editor.putString(Shared.SHARE_BORROW_INFO_DEADLINE, Item4);
+			// editor.commit();
+
 			mAppData.setInfoMoney(Item1);
 			mAppData.setInfoDate(Item2);
 			mAppData.setInfoInerest(Item3);
 			mAppData.setInfoDeadline(Item4);
 			mAppData.setInfoInerestTotal(mForecastTipNum.getText().toString());
-			
+
 			Intent it = new Intent();
 			it.setClass(this, BorrowShroffAccount.class);
 			startActivity(it);
@@ -491,6 +493,3 @@ public class BorrowInfoUI extends Activity implements OnClickListener,
 	}
 
 }
-
-
-

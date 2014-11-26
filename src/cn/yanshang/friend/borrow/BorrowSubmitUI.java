@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cn.yanshang.friend.R;
-import cn.yanshang.friend.common.Constants;
+import cn.yanshang.friend.common.MyConstants;
 import cn.yanshang.friend.common.Data;
 import cn.yanshang.friend.connect.BaseInfo;
 import cn.yanshang.friend.connect.BaseListener;
@@ -24,13 +24,14 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class BorrowSubmitUI extends Activity implements  OnClickListener, BaseListener{
+public class BorrowSubmitUI extends Activity implements OnClickListener,
+		BaseListener {
 
 	private Data mAppData;
-	
+
 	private ImageButton mShareTitle;
 	private TextView mBorrowReason;
-	
+
 	private TextView mMoney;
 	private TextView mRepaymentDate;
 	private TextView mYearInterest;
@@ -41,75 +42,79 @@ public class BorrowSubmitUI extends Activity implements  OnClickListener, BaseLi
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.borrow_submit_ui);
 
-		mAppData = (Data)getApplication(); 
-		//mActivity = this;
-		
+		mAppData = (Data) getApplication();
+		// mActivity = this;
+
 		initBase();
 	}
-	
+
 	private void initBase() {
-		
+
 		findViewById(R.id.btnTitleCancel).setVisibility(View.GONE);
-//		TitleBarCancel.setVisibility(View.GONE);.setVisibility(View.GONE)
-//		Drawable myImage = getResources().getDrawable(
-//				R.drawable.img_cancel_back);
-//		TitleBarCancel.setBackgroundDrawable(myImage);
+		// TitleBarCancel.setVisibility(View.GONE);.setVisibility(View.GONE)
+		// Drawable myImage = getResources().getDrawable(
+		// R.drawable.img_cancel_back);
+		// TitleBarCancel.setBackgroundDrawable(myImage);
 
 		TextView contentText = (TextView) findViewById(R.id.customTitleContent);
 		contentText.setText(R.string.borrow_submit_title);
-		
+
 		mShareTitle = (ImageButton) findViewById(R.id.btnTitleSet);
 		mShareTitle.setOnClickListener(this);
 		mShareTitle.setVisibility(View.VISIBLE);
-		
+
 		findViewById(R.id.btnSubmitOk).setOnClickListener(this);
 		findViewById(R.id.btnBackModify).setOnClickListener(this);
-		
+
 		mBorrowReason = (TextView) findViewById(R.id.tvBorrowReason);
 		mBorrowReason.setVisibility(View.GONE);
-		
+
 		mMoney = (TextView) findViewById(R.id.textMoney);
 		mRepaymentDate = (TextView) findViewById(R.id.textRepaymentDate);
 		mYearInterest = (TextView) findViewById(R.id.textYearInterest);
-		mDeadline = (TextView) findViewById(R.id.textDeadline);		
+		mDeadline = (TextView) findViewById(R.id.textDeadline);
 	}
-	
+
 	@Override
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
 		boolean isVisible = false;
-		
-		if (mAppData.getBorrowReasonStr()!=null&&mAppData.getBorrowReasonStr().length()>0) {
+
+		if (mAppData.getBorrowReasonStr() != null
+				&& mAppData.getBorrowReasonStr().length() > 0) {
 			mBorrowReason.setText(mAppData.getBorrowReasonStr());
 			isVisible = true;
 		}
-		
-		if (mAppData.getBorrowReasonImg()!=null) {
-			Drawable drawable = new BitmapDrawable(this.getResources(), mAppData.getBorrowReasonImg());
+
+		if (mAppData.getBorrowReasonImg() != null) {
+			Drawable drawable = new BitmapDrawable(this.getResources(),
+					mAppData.getBorrowReasonImg());
 			mBorrowReason.setBackgroundDrawable(drawable);
-			
-			DisplayMetrics outMetrics = new DisplayMetrics();  
-			this.getWindowManager().getDefaultDisplay().getMetrics(outMetrics);  
-		    int heigh = (int)outMetrics.density*300; 
+
+			DisplayMetrics outMetrics = new DisplayMetrics();
+			this.getWindowManager().getDefaultDisplay().getMetrics(outMetrics);
+			int heigh = (int) outMetrics.density * 300;
 			mBorrowReason.setHeight(heigh);
-			
+
 			isVisible = true;
 		}
-		
+
 		if (isVisible) {
 			mBorrowReason.setVisibility(View.VISIBLE);
-		}else {
+		} else {
 			mBorrowReason.setVisibility(View.GONE);
 		}
-		
-		if (mAppData.getInfoMoney()!=null) {
-			mMoney.setText(mAppData.getInfoMoney()+ getResources().getString(R.string.borrow_yuan));
+
+		if (mAppData.getInfoMoney() != null) {
+			mMoney.setText(mAppData.getInfoMoney()
+					+ getResources().getString(R.string.borrow_yuan));
 			mRepaymentDate.setText(mAppData.getInfoDate());
-			mYearInterest.setText(mAppData.getInfoInerest()+"%");
-			mDeadline.setText(mAppData.getInfoDeadline()+ getResources().getString(R.string.borrow_day));
+			mYearInterest.setText(mAppData.getInfoInerest() + "%");
+			mDeadline.setText(mAppData.getInfoDeadline()
+					+ getResources().getString(R.string.borrow_day));
 		}
-		
+
 	}
 
 	@Override
@@ -125,7 +130,7 @@ public class BorrowSubmitUI extends Activity implements  OnClickListener, BaseLi
 		}
 			break;
 		case R.id.btnTitleSet: {
-			//choosePopup();
+			// choosePopup();
 		}
 			break;
 		default:
@@ -133,41 +138,36 @@ public class BorrowSubmitUI extends Activity implements  OnClickListener, BaseLi
 		}
 	}
 
-	private void connectServer()
-	{
-//       	byte[] btInput = Base64AES.inputStream2byte(content);
-//    	byte[] btBase = Base64AES.decodeBase64(btInput);
-//    	byte[] btAES = Base64AES.decryptAES(btBase, Constants.AES_CODE_KEY_ROAD);
-//    	
-//    	
-//    	byte[] btBase123 = Base64AES.encodeBase64(btInput);
+	private void connectServer() {
+		// byte[] btInput = Base64AES.inputStream2byte(content);
+		// byte[] btBase = Base64AES.decodeBase64(btInput);
+		// byte[] btAES = Base64AES.decryptAES(btBase,
+		// Constants.AES_CODE_KEY_ROAD);
+		//
+		//
+		// byte[] btBase123 = Base64AES.encodeBase64(btInput);
 		Toast.makeText(this, "00 base64", Toast.LENGTH_SHORT).show();
-		
-		if (mAppData.getBorrowReasonImg()!=null) {
-			String ddString = Base64AES.bitmapToBase64(mAppData.getBorrowReasonImg());
-			
-			
-	    	Map<String,String> keyValueMap = new HashMap<String,String>();
-	    	keyValueMap.put("imgName", "imageOK");
-	    	keyValueMap.put("img", ddString);
-			
-	    	BindPhoneInfotest bInfo = new BindPhoneInfotest();
 
-			HttpConnect.newInstance().doPost(this, bInfo.getJsonString(keyValueMap), bInfo,Constants.URL_POST_test, this);
+		if (mAppData.getBorrowReasonImg() != null) {
+			String ddString = Base64AES.bitmapToBase64(mAppData
+					.getBorrowReasonImg());
+
+			Map<String, String> keyValueMap = new HashMap<String, String>();
+			keyValueMap.put("imgName", "imageOK");
+			keyValueMap.put("img", ddString);
+
+			BindPhoneInfotest bInfo = new BindPhoneInfotest();
+
+			HttpConnect.newInstance().doPost(this,
+					bInfo.getJsonString(keyValueMap), bInfo,
+					MyConstants.URL_POST_test, this);
 		}
-		
+
 	}
-	
+
 	@Override
 	public void onGotInfo(BaseInfo objInfo) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
-
-
-
-
-
-
-

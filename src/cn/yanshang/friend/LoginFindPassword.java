@@ -33,7 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 //import cn.smssdk.EventHandler;
 //import cn.smssdk.SMSSDK;
-import cn.yanshang.friend.common.Constants;
+import cn.yanshang.friend.common.MyConstants;
 import cn.yanshang.friend.common.Shared;
 import cn.yanshang.friend.connect.BaseInfo;
 import cn.yanshang.friend.connect.BaseListener;
@@ -42,12 +42,13 @@ import cn.yanshang.friend.info.RegisterUserInfo;
 import cn.yanshang.friend.utils.CommonUtils;
 import cn.yanshang.friend.utils.ProgressUtil;
 
-public class LoginFindPassword extends Activity implements OnClickListener, BaseListener {
+public class LoginFindPassword extends Activity implements OnClickListener,
+		BaseListener {
 
 	private Button btnRegister;
 	private Button btnCheck;
-//	private TextView btnLoginText; 
-	
+	// private TextView btnLoginText;
+
 	private EditText inputPhoneNum;
 	private EditText inputPassword;
 	private EditText inputCheck;
@@ -68,13 +69,17 @@ public class LoginFindPassword extends Activity implements OnClickListener, Base
 				// txtView.setText("" + recLen);
 
 				if (recLen > 0) {
-					btnCheck.setText(mActivity.getString(R.string.tip_check_send)+"(" + recLen + ")");
+					btnCheck.setText(mActivity
+							.getString(R.string.tip_check_send)
+							+ "("
+							+ recLen
+							+ ")");
 					Message message = handler.obtainMessage(1);
 					handler.sendMessageDelayed(message, 1000);
 				} else {
-					//txtView.setVisibility(View.GONE);
+					// txtView.setVisibility(View.GONE);
 					btnCheck.setEnabled(true);
-					//btnRegister.setEnabled(true);
+					// btnRegister.setEnabled(true);
 					btnCheck.setText(R.string.get_phone_check_num);
 				}
 			}
@@ -100,22 +105,22 @@ public class LoginFindPassword extends Activity implements OnClickListener, Base
 		setContentView(R.layout.login_find_password);
 
 		mActivity = this;
-		
-		initBase();
-		
-	}
 
+		initBase();
+
+	}
 
 	private void initBase() {
 
-		ImageButton TitleBarCancel = (ImageButton)findViewById(R.id.btnTitleCancel);
+		ImageButton TitleBarCancel = (ImageButton) findViewById(R.id.btnTitleCancel);
 		TitleBarCancel.setOnClickListener(this);
-		Drawable myImage = getResources().getDrawable(R.drawable.img_cancel_back);
+		Drawable myImage = getResources().getDrawable(
+				R.drawable.img_cancel_back);
 		TitleBarCancel.setBackgroundDrawable(myImage);
-		
+
 		TextView contentText = (TextView) findViewById(R.id.customTitleContent);
 		contentText.setText(R.string.find_password_tip_2);
-		
+
 		btnRegister = (Button) findViewById(R.id.btnFindOk);
 		btnRegister.setOnClickListener(this);
 		btnRegister.setEnabled(false);
@@ -124,9 +129,9 @@ public class LoginFindPassword extends Activity implements OnClickListener, Base
 		btnCheck.setOnClickListener(this);
 		btnCheck.setEnabled(false);
 
-//		btnLoginText =(TextView) findViewById(R.id.loginText);
-//		btnLoginText.setOnClickListener(this);
-		
+		// btnLoginText =(TextView) findViewById(R.id.loginText);
+		// btnLoginText.setOnClickListener(this);
+
 		inputPassword = (EditText) findViewById(R.id.inputPassword);
 
 		inputPassword.addTextChangedListener(new TextWatcher() {
@@ -174,16 +179,15 @@ public class LoginFindPassword extends Activity implements OnClickListener, Base
 			public void afterTextChanged(Editable s) {
 				// TODO Auto-generated method stub
 				if (s.length() > 0) {
-					//btnRegister.setEnabled(true);
+					// btnRegister.setEnabled(true);
 					btnCheck.setEnabled(true);
 				} else {
-					//btnRegister.setEnabled(false);
+					// btnRegister.setEnabled(false);
 					btnCheck.setEnabled(false);
 				}
 			}
 		});
 	}
-
 
 	@Override
 	public void finish() {
@@ -199,9 +203,9 @@ public class LoginFindPassword extends Activity implements OnClickListener, Base
 			this.finish();
 			break;
 		case R.id.btnCheck:
-			//Toast.makeText(this, "1", Toast.LENGTH_SHORT).show();
+			// Toast.makeText(this, "1", Toast.LENGTH_SHORT).show();
 			connectServerIsValid();
-			//RequestVerificationCode();
+			// RequestVerificationCode();
 			break;
 		case R.id.btnFindOk:
 			goRegister();
@@ -218,8 +222,9 @@ public class LoginFindPassword extends Activity implements OnClickListener, Base
 		String password = inputPassword.getText().toString();
 		String verifyCode = inputCheck.getText().toString();
 
-		//密码判断
-		if (password.length() < 8 || password.length()>20 || !CommonUtils.isPasswordValid(password)) {
+		// 密码判断
+		if (password.length() < 8 || password.length() > 20
+				|| !CommonUtils.isPasswordValid(password)) {
 			ProgressUtil.showDialog(this,
 					getResources().getString(R.string.dialog_title_1),
 					getResources().getString(R.string.dialog_password_1));
@@ -256,7 +261,7 @@ public class LoginFindPassword extends Activity implements OnClickListener, Base
 					getResources().getString(R.string.dialog_phone_num_2));
 		}
 	}
-	
+
 	private void connectServerIsValid() {
 		String phone = inputPhoneNum.getText().toString();
 
@@ -287,106 +292,73 @@ public class LoginFindPassword extends Activity implements OnClickListener, Base
 		// 获取验证码
 		HttpConnect.newInstance().doPost(this,
 				bInfo.getJsonString(keyValueMap, "findback-with-phone"), bInfo,
-				Constants.URL_POST_SEND_PHONE_CODE, this);
+				MyConstants.URL_POST_SEND_PHONE_CODE, this);
 	}
 
-	private void connectServerRegister(String phoneNum, String password,String verifyCode) {
-		
+	private void connectServerRegister(String phoneNum, String password,
+			String verifyCode) {
+
 		Map<String, String> keyValueMap = new HashMap<String, String>();
 		keyValueMap.put("phone", phoneNum);
 		keyValueMap.put("password", password);
 		keyValueMap.put("code", verifyCode);
 
 		RegisterUserInfo bInfo = new RegisterUserInfo();
-		
+
 		HttpConnect.newInstance().doPost(this,
 				bInfo.getJsonString(keyValueMap, null), bInfo,
-				Constants.URL_POST_FIND_PASSWORD, this);
+				MyConstants.URL_POST_FIND_PASSWORD, this);
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-//		SMSSDK.unregisterEventHandler(mEventHandler);
+		// SMSSDK.unregisterEventHandler(mEventHandler);
 	}
 
 	@Override
 	public void onGotInfo(BaseInfo objInfo) {
 		// TODO Auto-generated method stub
-		RegisterUserInfo bInfo = (RegisterUserInfo)objInfo;
-		
+		RegisterUserInfo bInfo = (RegisterUserInfo) objInfo;
+
 		if (bInfo == null) {
-			ProgressUtil.dismiss(mProgress);
 			Toast.makeText(this, "onGotInfoErr=" + "bInfo==null",
 					Toast.LENGTH_SHORT).show();
-			return;
-		} else if (bInfo.getStatus() == Constants.HTTP_STATUS_TIMEOUT) {
-			ProgressUtil.dismiss(mProgress);
-			Toast.makeText(this, "onGotInfoErr=网络链接超时", Toast.LENGTH_SHORT)
-					.show();
-			return;
-		}//网络异常
-		
-		if (bInfo.getStatus() != Constants.HTTP_STATUS_OK) {
-			if (bInfo.getStatus() == Constants.HTTP_STATUS_VALID_FALSE) {
-				Toast.makeText(this, "此号码已经注册过", Toast.LENGTH_SHORT).show();
-			} else if (bInfo.getStatus() == Constants.HTTP_STATUS_VALID_TURE) {
-				btnRegister.setEnabled(true);
-
-				mPhoneNum = bInfo.getPhoneNum();
-				
-				//测试用
-				inputCheck.setText(bInfo.getCode());
-			} else {
-				Toast.makeText(this, "onGotInfoErr=" + bInfo.getStatus(),
-						Toast.LENGTH_SHORT).show();
-			}
-
-			ProgressUtil.dismiss(mProgress);
-			return;
-		}
-
-		
-		if (bInfo.getStatus() == Constants.HTTP_STATUS_OK) {
-			//保存登录信息
-//			saveLoginInfo(bInfo);		
-//			Intent it = new Intent();
-//			it.setClass(this, LoginPhone.class);
-//			startActivity(it);
-
-			Toast.makeText(this, "onGotInfo=" +bInfo.getStatus(),
-					Toast.LENGTH_SHORT).show();
+		}else if (bInfo.getStatus() == MyConstants.HTTP_STATUS_OK) {
+			Toast.makeText(this, "onGotInfo=" + bInfo.getStatus(),Toast.LENGTH_SHORT).show();
 			this.finish();
-		} else {
-			Toast.makeText(this, "onGotInfoErr=" + bInfo.getStatus(),
-					Toast.LENGTH_SHORT).show();
+			
+		} else if (bInfo.getStatus() == MyConstants.HTTP_STATUS_VALID_TURE) {
+			btnRegister.setEnabled(true);
+
+			mPhoneNum = bInfo.getPhoneNum();
+
+			// 测试用
+			inputCheck.setText(bInfo.getCode());
+		}else {
+			CommonUtils.statusError(bInfo.getStatus(), this);
 		}
-		
+
 		ProgressUtil.dismiss(mProgress);
 	}
 
+	// private void saveLoginInfo(RegisterUserInfo bInfo){
+	//
+	// SharedPreferences preferences = getSharedPreferences(
+	// Shared.SHARE_LOGIN_ALL_GET, Context.MODE_PRIVATE);
+	//
+	// Editor editor = preferences.edit();
+	// editor.putInt(Shared.SHARE_LOGIN_UID, bInfo.getUid());
+	// editor.putString(Shared.SHARE_LOGIN_SID, bInfo.getSid());
+	// editor.putInt(Shared.SHARE_LOGIN_SERVICE, bInfo.getService());
+	// editor.putString(Shared.SHARE_LOGIN_REALNAME, bInfo.getRealName());
+	// editor.putString(Shared.SHARE_LOGIN_NICKNAME, bInfo.getNickName());
+	// editor.putString(Shared.SHARE_LOGIN_IDCARD, bInfo.getIdCard());
+	// editor.putString(Shared.SHARE_LOGIN_HEADIMGURL, bInfo.getHeadimgurl());
+	// editor.putString(Shared.SHARE_LOGIN_SIGNATURE, bInfo.getSignature());
+	//
+	// editor.commit();
+	// }
 
-//	private void saveLoginInfo(RegisterUserInfo bInfo){
-//		
-//		SharedPreferences preferences = getSharedPreferences(
-//				Shared.SHARE_LOGIN_ALL_GET, Context.MODE_PRIVATE);
-//		
-//		Editor editor = preferences.edit();
-//		editor.putInt(Shared.SHARE_LOGIN_UID, bInfo.getUid());
-//		editor.putString(Shared.SHARE_LOGIN_SID, bInfo.getSid());
-//		editor.putInt(Shared.SHARE_LOGIN_SERVICE, bInfo.getService());
-//		editor.putString(Shared.SHARE_LOGIN_REALNAME, bInfo.getRealName());
-//		editor.putString(Shared.SHARE_LOGIN_NICKNAME, bInfo.getNickName());
-//		editor.putString(Shared.SHARE_LOGIN_IDCARD, bInfo.getIdCard());
-//		editor.putString(Shared.SHARE_LOGIN_HEADIMGURL, bInfo.getHeadimgurl());
-//		editor.putString(Shared.SHARE_LOGIN_SIGNATURE, bInfo.getSignature());
-//		
-//		editor.commit();
-//	}
-	
 }
-
-
-
-

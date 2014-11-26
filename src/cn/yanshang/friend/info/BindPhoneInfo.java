@@ -6,16 +6,26 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.text.TextUtils;
-import cn.yanshang.friend.common.Constants;
+import cn.yanshang.friend.common.MyConstants;
 import cn.yanshang.friend.connect.BaseInfo;
 
-public class BindPhoneInfo implements BaseInfo{
+public class BindPhoneInfo implements BaseInfo {
 
 	private String _Sid;
 	private int _status;
-	private int _iType;
+	private int _uid;
+	private int _iService;// 1-phone 2-qq
 	private String _phoneNum;
-	
+	private String _nickName;
+
+	private String _idCard;
+	private String _realname;
+	private String _signature;
+	private String _headimgurl;
+
+	// 测试用
+	private String _code;
+
 	@Override
 	public String getSid() {
 		// TODO Auto-generated method stub
@@ -39,87 +49,165 @@ public class BindPhoneInfo implements BaseInfo{
 		// TODO Auto-generated method stub
 		_status = status;
 	}
-	
-//	@Override
-//	public int getType() {
-//		// TODO Auto-generated method stub
-//		return _iType;
-//	}
-//
-//	@Override
-//	public void setType(int iType) {
-//		// TODO Auto-generated method stub
-//		_iType = iType;
-//	}
-//	
+
+	public int getUid() {
+		return _uid;
+	}
+
+	public void setUid(int uid) {
+		_uid = uid;
+	}
+
+	public int getService() {
+		// TODO Auto-generated method stub
+		return _iService;
+	}
+
+	public void setService(int iService) {
+		// TODO Auto-generated method stub
+		_iService = iService;
+	}
+
 	public String getPhoneNum() {
 		return _phoneNum;
 	}
-	
+
 	public void setPhoneNum(String phoneNum) {
-		 _phoneNum = phoneNum;
+		_phoneNum = phoneNum;
 	}
-	
+
+	public String getNickName() {
+		return _nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this._nickName = nickName;
+	}
+
+	// private String _idCard;
+	// private String _realname;
+	// private String _signature;
+	// private String _headimgurl;
+
+	public String getIdCard() {
+		return _idCard;
+	}
+
+	public void setIdCard(String idCard) {
+		this._idCard = idCard;
+	}
+
+	public String getRealName() {
+		return _realname;
+	}
+
+	public void setRealName(String realname) {
+		this._realname = realname;
+	}
+
+	public String getSignature() {
+		return _signature;
+	}
+
+	public void setSignature(String signature) {
+		this._signature = signature;
+	}
+
+	public String getHeadimgurl() {
+		return _headimgurl;
+	}
+
+	public void setHeadimgurl(String headimgurl) {
+		this._headimgurl = headimgurl;
+	}
+
+	// 测试用
+	public String getCode() {
+		return _code;
+	}
+
+	public void setCode(String code) {
+		_code = code;
+	}
+
 	@Override
 	public boolean parseJson(String jsonString) {
 		// TODO Auto-generated method stub
 		boolean isOk = false;
-		
+
 		if (!TextUtils.isEmpty(jsonString)) {
+
+			// 链接超时
+			if (jsonString.equals(MyConstants.RESPONSE_STR_TIMEOUT)) {
+				this.setStatus(MyConstants.HTTP_STATUS_TIMEOUT);
+				return false;
+			}
+
 			try {
 				JSONObject jsonObj = new JSONObject(jsonString);
 				int status = jsonObj.getInt("status");
 				this.setStatus(status);
-				
-				JSONObject dataJsonObj = jsonObj.getJSONObject("body");
-				if (status == Constants.HTTP_STATUS_OK ) {
-					//String uid = dataJsonObj.getString("uid");
-					String phoneNum = dataJsonObj.getString("phone");
 
-					//this.setUid(uid);
+				String sid = jsonObj.getString("sid");
+				this.setSid(sid);
+
+				JSONObject dataJsonObj = jsonObj.getJSONObject("body");
+				if (status == MyConstants.HTTP_STATUS_OK) {
+					String phoneNum = dataJsonObj.getString("phone");
 					this.setPhoneNum(phoneNum);
-					
+
+					this.setUid(dataJsonObj.getInt("uid"));
+					this.setService(dataJsonObj.getInt("service"));
+
+					this.setRealName(dataJsonObj.getString("realName"));
+					this.setIdCard(dataJsonObj.getString("idCard"));
+					this.setHeadimgurl(dataJsonObj.getString("headimgurl"));
+					this.setNickName(dataJsonObj.getString("nickname"));
+					this.setSignature(dataJsonObj.getString("signature"));
+
 					isOk = true;
-				}else {
-					//this.setUid("error01");
-					this.setPhoneNum("error02");
+				} else if (status == MyConstants.HTTP_STATUS_VALID_TURE) {
+					String phoneNum = dataJsonObj.getString("phone");
+					this.setPhoneNum(phoneNum);
+
+					// 测试代码
+					String code = dataJsonObj.getString("code");
+					this.setCode(code);
+
+					isOk = true;
 				}
-				
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return isOk;
 	}
 
-//	ArrayList<NameValuePair> keyValueArray = new ArrayList<NameValuePair>();
-//	
-//	if(keyValueMap!=null && !keyValueMap.isEmpty()){
-//		for(Map.Entry<String, String> entry : keyValueMap.entrySet()){		
-//			keyValueArray.add(new BasicNameValuePair(entry.getKey(),entry.getValue()));
-//		}
-//	}
 	
-	public String getJsonString(Map<String,String> keyMap) {
-		
-		//JSONArray arrayJson = new JSONArray();
+	public String getJsonString(Map<String, String> keyMap, String situation) {
+
+		// JSONArray arrayJson = new JSONArray();
 		JSONObject obj = new JSONObject();
 		try {
 			JSONObject objdata = new JSONObject();
-			objdata.put("uid", keyMap.get("uid"));
-			objdata.put("phone", keyMap.get("phone"));
-			
+			if (situation != null) {
+				objdata.put("phone", keyMap.get("phone"));
+				objdata.put("situation", situation);
+			} else {
+				objdata.put("phone", keyMap.get("phone"));
+				objdata.put("openid", keyMap.get("openid"));
+				objdata.put("service", Integer.parseInt(keyMap.get("service")));
+				objdata.put("code", keyMap.get("code"));
+			}
+
 			obj.put("body", objdata);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		//arrayJson.put(obj);
-		
+		// arrayJson.put(obj);
+
 		return obj.toString();
 	}
 
-
 }
-
-
